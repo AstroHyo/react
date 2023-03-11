@@ -11,6 +11,7 @@ function App() {
     "How to overcome bad emotions",
   ]);
   let [likesNum, likesChange] = useState(0);
+  let [modal, setModal] = useState(false);
 
   return (
     <div className="App">
@@ -26,10 +27,11 @@ function App() {
       >
         글수정
       </button>
+
       <div className="list">
         <h4>
           {postTitle[0]}{" "}
-          <span
+          <span 
             onClick={() => {
               likesChange(likesNum++);
             }}
@@ -40,14 +42,39 @@ function App() {
         </h4>
         <p>2월 17일 발행</p>
       </div>
+
       <div className="list">
         <h4>{postTitle[1]} </h4>
         <p>2월 17일 발행</p>
       </div>
+
       <div className="list">
-        <h4>{postTitle[2]} </h4>
+        <h4
+          onClick={() => {
+            if (modal == true) setModal(false);
+            if (modal == false) setModal(true);
+          }}
+        >
+          {postTitle[2]}{" "}
+        </h4>
         <p>2월 17일 발행</p>
       </div>
+
+      {
+        [1, 2, 3].map()  {}
+      }
+
+      {modal == true ? <Modal /> : null}
+    </div>
+  );
+}
+
+function Modal() {
+  return (
+    <div className="modal">
+      <h4>제목</h4>
+      <p>날짜</p>
+      <p>상세내용</p>
     </div>
   );
 }
