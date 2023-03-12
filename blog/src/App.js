@@ -57,8 +57,6 @@ function App() {
       {modal == true ? (
         <Modal changePostTitle={changePostTitle} postTitle={postTitle} modalTitle={modalTitle}/>
       ) : null}
-      
-      <Modal2></Modal2>
 
     </div>
   );
