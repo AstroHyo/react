@@ -1,10 +1,17 @@
+import { useState } from "react";
 import { Navbar, Container, Nav, Row, Col } from 'react-bootstrap';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import data from './data.js';
+import { Routes, Route, Link } from 'react-router-dom';
 
 function App() {
+
+  let [post] = useState(data);
+
   return (
     <div className="App">
+
       <Navbar bg="dark" variant="dark">
         <Container>
           <Navbar.Brand href="#home">KeepTube</Navbar.Brand>
@@ -18,30 +25,41 @@ function App() {
 
       <div className="main-bg"></div>
 
-      <Container>
-        <Row>
-          <Col sm>
-            <VideoThumbnail videoUrl="https://www.youtube.com/watch?v=qRIcX0oJ1k4" />
-            <h4>How to be absorbed in your work</h4>
-            <p>내용 요약</p>
-          </Col>
-          <Col sm>
-            <VideoThumbnail videoUrl="https://www.youtube.com/watch?v=zBQa48lLuVg" />
-            <h4>What makes you happy even with massive work</h4>
-            <p>내용 요약</p>
-          </Col>
-          <Col sm>
-            <VideoThumbnail videoUrl="https://www.youtube.com/watch?v=o_qXV6SKJLk" />
-            <h4>How to overcome bad emotions</h4>
-            <p>내용 요약</p>
-          </Col>
-        </Row>
-      </Container>
+      <Routes>
+        <Route path="/" element={
+          <Container>
+            <Row>
+              {
+                post.map((a, i) => {
+                  return (
+                    <Card post={post[i]}/>
+                  )
+                })
+              }
+            </Row>
+          </Container>
+        }/>
+        <Route path="/detail" element={<div>상세페이지</div>}/>
+        <Route path="/about" element={<div>우리팀이에요</div>}/>
+      </Routes>
+
+      
 
     </div>
   );
 }
 
+function Card(props){
+  return(
+    <Col sm>
+      <VideoThumbnail videoUrl={props.post.videoUrl} />
+      <h4>{props.post.title}</h4>
+      <p>{props.post.price}</p>
+    </Col>
+  )
+}
+
+//유튜브 썸네일 가져오는 코드
 function VideoThumbnail({ videoUrl }) {
   const videoId = videoUrl.split("=")[1];
   const thumbnailUrl = `https://img.youtube.com/vi/${videoId}/0.jpg`;
