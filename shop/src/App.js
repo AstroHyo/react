@@ -2,23 +2,25 @@ import { useState } from "react";
 import { Navbar, Container, Nav, Row, Col } from 'react-bootstrap';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { Routes, Route, Link, useNavigate, Outlet } from 'react-router-dom';
 import data from './data.js';
-import { Routes, Route, Link } from 'react-router-dom';
+import Detail from './routes/Detail.js';
 
 function App() {
 
   let [post] = useState(data);
+  let navigate = useNavigate();
 
   return (
     <div className="App">
 
       <Navbar bg="dark" variant="dark">
         <Container>
-          <Navbar.Brand href="#home">KeepTube</Navbar.Brand>
+          <Navbar.Brand onClick={()=>{ navigate('/') }}>KeepTube</Navbar.Brand>
           <Nav className="me-auto">
-            <Nav.Link href="#home">Home</Nav.Link>
-            <Nav.Link href="#features">Recommend</Nav.Link>
-            <Nav.Link href="#pricing">My page</Nav.Link>
+            <Nav.Link onClick={()=>{ navigate('/') }}>Home</Nav.Link>
+            <Nav.Link onClick={()=>{ navigate('/detail') }}>Detail</Nav.Link>
+            <Nav.Link onClick={()=>{ navigate('/about') }}>About</Nav.Link>
           </Nav>
         </Container>
       </Navbar>
@@ -29,21 +31,22 @@ function App() {
         <Route path="/" element={
           <Container>
             <Row>
-              {
-                post.map((a, i) => {
-                  return (
-                    <Card post={post[i]}/>
-                  )
-                })
-              }
+              { post.map((a, i) => {
+                  return <Card post={post[i]}/>
+              })}
             </Row>
           </Container>
         }/>
-        <Route path="/detail" element={<div>상세페이지</div>}/>
-        <Route path="/about" element={<div>우리팀이에요</div>}/>
-      </Routes>
 
-      
+        <Route path="/detail/:id" element={<Detail post={post}/>}/>
+
+        <Route path="/about" element={<About/>}>
+          <Route path="member" element={<div>멤버임</div>}/>
+          <Route path="location" element={<div>주소임</div>}/>
+        </Route>
+
+        <Route path="*" element={<div>404페이지</div>}/>
+      </Routes>
 
     </div>
   );
@@ -56,6 +59,15 @@ function Card(props){
       <h4>{props.post.title}</h4>
       <p>{props.post.price}</p>
     </Col>
+  )
+}
+
+function About(){
+  return(
+    <div>
+      <h4>회사정보임</h4>
+      <Outlet></Outlet>
+    </div>
   )
 }
 
