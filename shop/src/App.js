@@ -2,9 +2,10 @@ import { useState } from "react";
 import { Navbar, Container, Nav, Row, Col } from 'react-bootstrap';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Routes, Route, Link, useNavigate, Outlet } from 'react-router-dom';
+import { Routes, Route, useNavigate, Outlet } from 'react-router-dom';
 import data from './data.js';
 import Detail from './routes/Detail.js';
+import Card from "./Card";
 
 function App() {
 
@@ -32,13 +33,13 @@ function App() {
           <Container>
             <Row>
               { post.map((a, i) => {
-                  return <Card post={post[i]}/>
+                  return <Card id={i}/>
               })}
             </Row>
           </Container>
         }/>
 
-        <Route path="/detail/:id" element={<Detail post={post}/>}/>
+        <Route path="/detail/:id" element={<Detail/>}/>
 
         <Route path="/about" element={<About/>}>
           <Route path="member" element={<div>멤버임</div>}/>
@@ -52,15 +53,6 @@ function App() {
   );
 }
 
-function Card(props){
-  return(
-    <Col sm>
-      <VideoThumbnail videoUrl={props.post.videoUrl} />
-      <h4>{props.post.title}</h4>
-      <p>{props.post.price}</p>
-    </Col>
-  )
-}
 
 function About(){
   return(
@@ -70,14 +62,5 @@ function About(){
     </div>
   )
 }
-
-//유튜브 썸네일 가져오는 코드
-function VideoThumbnail({ videoUrl }) {
-  const videoId = videoUrl.split("=")[1];
-  const thumbnailUrl = `https://img.youtube.com/vi/${videoId}/0.jpg`;
-
-  return <img src={thumbnailUrl} alt="Thumbnail" width="80%" />;
-}
-
 
 export default App;
