@@ -40,7 +40,7 @@ function Detail() {
                 <div className="col-md-6">
                     <h4 className="pt-5">{product.title}</h4>
                     <p>{product.content}</p>
-                    <p>{product.price}</p>
+                    <p>{product.view}</p>
                     <button className="btn btn-danger">주문하기</button> 
                 </div>
             </div>

@@ -1,10 +1,11 @@
 import { useState } from "react";
-import { Navbar, Container, Nav, Row, Col } from 'react-bootstrap';
+import { Navbar, Container, Nav, Row, Col, Button } from 'react-bootstrap';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Routes, Route, useNavigate, Outlet } from 'react-router-dom';
 import data from './data.js';
 import Detail from './routes/Detail.js';
+import Upload from './routes/Upload.js';
 import Card from "./Card";
 
 function App() {
@@ -26,10 +27,13 @@ function App() {
         </Container>
       </Navbar>
 
-      <div className="main-bg"></div>
-
       <Routes>
         <Route path="/" element={
+          <>
+          <div className="main-bg"></div>
+          <Button variant="outline-danger" onClick={()=>{ navigate('/upload') }}>
+            Take your note!
+          </Button>
           <Container>
             <Row>
               { post.map((a, i) => {
@@ -37,6 +41,11 @@ function App() {
               })}
             </Row>
           </Container>
+          </>
+        }/>
+
+        <Route path="/upload" element={ 
+            <Upload/>
         }/>
 
         <Route path="/detail/:id" element={<Detail/>}/>

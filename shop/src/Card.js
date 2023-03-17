@@ -12,7 +12,7 @@ function Card(props){
       <Col sm onClick={()=>{ navigate('/detail/' + postData.id) }}>
         <VideoThumbnail videoUrl={postData.videoUrl} />
         <h4>{postData.title}</h4>
-        <p>{postData.price}</p>
+        <p>{postData.view}</p>
       </Col>
     )
 }
